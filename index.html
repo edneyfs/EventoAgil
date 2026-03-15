@@ -1,0 +1,888 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brand-1: #1a3a5c;
+    --brand-2: #0f6e56;
+    --accent: #e8a020;
+    --accent-light: #fdf3e0;
+    --soft-bg: #f7f6f3;
+    --card-bg: #ffffff;
+    --text-1: #1a1a1a;
+    --text-2: #555550;
+    --text-3: #999990;
+    --border: rgba(0,0,0,0.08);
+    --border-strong: rgba(0,0,0,0.15);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  body { font-family: 'DM Sans', sans-serif; background: var(--soft-bg); color: var(--text-1); min-height: 100vh; }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* NAV */
+  nav {
+    background: var(--brand-1);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: #fff;
+    cursor: pointer;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 6px; }
+  .nav-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover, .nav-btn.active { background: rgba(255,255,255,0.12); color: #fff; }
+
+  /* HOME */
+  .hero {
+    background: var(--brand-1);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(232,160,32,0.08);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: rgba(15,110,86,0.12);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(232,160,32,0.2);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero h1 em { color: var(--accent); font-style: normal; }
+  .hero p {
+    color: rgba(255,255,255,0.65);
+    font-size: 16px;
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent);
+    color: #1a1a1a;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: #f0b030; transform: translateY(-1px); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 12px 24px;
+    border-radius: 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.18); }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+    gap: 0;
+  }
+  .stat-item {
+    padding: 1.2rem 2.5rem;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--brand-1);
+  }
+  .stat-label { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+
+  /* SECTION */
+  .section { padding: 3rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-1);
+    margin-bottom: 0.4rem;
+  }
+  .section-sub { font-size: 14px; color: var(--text-2); margin-bottom: 2rem; }
+
+  /* PHASE TABS */
+  .phase-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 2rem; }
+  .phase-tab {
+    padding: 8px 18px;
+    border-radius: 30px;
+    border: 1.5px solid var(--border-strong);
+    background: var(--card-bg);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-2);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .phase-tab:hover { border-color: var(--brand-1); color: var(--brand-1); }
+  .phase-tab.active { background: var(--brand-1); color: #fff; border-color: var(--brand-1); }
+  .phase-tab.c2 { }
+  .phase-tab.c2.active { background: #0f6e56; border-color: #0f6e56; }
+  .phase-tab.c3.active { background: #7f3fbf; border-color: #7f3fbf; }
+  .phase-tab.c4.active { background: #c04020; border-color: #c04020; }
+  .phase-tab.c5.active { background: #1a6080; border-color: #1a6080; }
+
+  /* CARD GRID */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+
+  .tool-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: all 0.22s;
+    position: relative;
+    overflow: hidden;
+  }
+  .tool-card:hover { border-color: var(--border-strong); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .tool-card.fase-1::before { background: var(--brand-1); }
+  .tool-card.fase-2::before { background: #0f6e56; }
+  .tool-card.fase-3::before { background: #7f3fbf; }
+  .tool-card.fase-4::before { background: #c04020; }
+  .tool-card.fase-5::before { background: #1a6080; }
+
+  .card-badges { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+  .badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 12px;
+    letter-spacing: 0.2px;
+  }
+  .badge-tipo { background: #eef3fb; color: #185fa5; }
+  .badge-dur { background: #eaf3de; color: #3b6d11; }
+  .badge-fase-1 { background: #e6edf5; color: var(--brand-1); }
+  .badge-fase-2 { background: #e1f5ee; color: #0f6e56; }
+  .badge-fase-3 { background: #f0e8f8; color: #7f3fbf; }
+  .badge-fase-4 { background: #faece7; color: #c04020; }
+  .badge-fase-5 { background: #e6f4f8; color: #1a6080; }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-1);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .card-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; margin-bottom: 14px; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .card-meta { font-size: 12px; color: var(--text-3); }
+  .card-arrow {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--soft-bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    color: var(--text-2);
+    transition: all 0.2s;
+  }
+  .tool-card:hover .card-arrow { background: var(--brand-1); color: #fff; }
+
+  /* PROCESS STRIP */
+  .process-strip {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .process-flow { display: flex; align-items: center; gap: 0; overflow-x: auto; }
+  .process-step {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+    padding: 1rem 0.75rem;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s;
+    position: relative;
+  }
+  .process-step:hover { background: var(--soft-bg); }
+  .process-step-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 auto 10px;
+    color: #fff;
+  }
+  .n1 { background: var(--brand-1); }
+  .n2 { background: #0f6e56; }
+  .n3 { background: #7f3fbf; }
+  .n4 { background: #c04020; }
+  .n5 { background: #1a6080; }
+  .process-step-name { font-size: 12px; font-weight: 500; color: var(--text-1); line-height: 1.3; }
+  .process-step-count { font-size: 11px; color: var(--text-3); margin-top: 4px; }
+  .process-arrow { color: var(--text-3); font-size: 14px; flex-shrink: 0; padding: 0 4px; }
+
+  /* DETAIL PAGE */
+  .detail-hero {
+    padding: 3rem 2rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .detail-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-2);
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    background: none;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    padding: 0;
+  }
+  .detail-back:hover { color: var(--text-1); }
+  .detail-header { display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap; }
+  .detail-header-text { flex: 1; min-width: 280px; }
+  .detail-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: var(--text-1);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+  .detail-purpose { font-size: 16px; color: var(--text-2); line-height: 1.7; margin-bottom: 1.25rem; }
+  .detail-meta-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .meta-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 30px;
+    border: 1px solid var(--border-strong);
+    font-size: 13px;
+    color: var(--text-1);
+    background: var(--card-bg);
+  }
+  .meta-badge-icon { font-size: 14px; }
+
+  .detail-body { display: grid; grid-template-columns: 1fr 320px; gap: 2rem; max-width: 1100px; margin: 0 auto; padding: 0 2rem 3rem; }
+  @media (max-width: 700px) { .detail-body { grid-template-columns: 1fr; } }
+
+  .detail-section { margin-bottom: 2rem; }
+  .detail-section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-3);
+    margin-bottom: 1rem;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .step-list { display: flex; flex-direction: column; gap: 12px; }
+  .step-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+  .step-dot {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--brand-1);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-content { flex: 1; }
+  .step-title { font-size: 14px; font-weight: 500; color: var(--text-1); margin-bottom: 3px; }
+  .step-desc { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+  .step-time { font-size: 11px; color: var(--text-3); margin-top: 4px; }
+
+  .insight-box {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 14px 16px;
+    margin-bottom: 1.5rem;
+  }
+  .insight-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .insight-text { font-size: 14px; color: #5a4510; line-height: 1.6; font-style: italic; }
+
+  .sidebar-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-bottom: 16px;
+  }
+  .sidebar-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-3);
+    margin-bottom: 12px;
+  }
+
+  .io-list { display: flex; flex-direction: column; gap: 6px; }
+  .io-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--text-2); }
+  .io-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .io-dot.in { background: #185fa5; }
+  .io-dot.out { background: #0f6e56; }
+
+  .tool-list { display: flex; flex-direction: column; gap: 6px; }
+  .tool-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-2);
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: var(--soft-bg);
+  }
+  .tool-icon {
+    width: 20px; height: 20px;
+    border-radius: 4px;
+    background: var(--border);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-2);
+  }
+
+  .kpi-list { display: flex; flex-direction: column; gap: 8px; }
+  .kpi-item { padding: 10px 12px; background: var(--soft-bg); border-radius: var(--radius-sm); }
+  .kpi-name { font-size: 13px; font-weight: 500; color: var(--text-1); }
+  .kpi-meta { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+
+  .role-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .role-item:last-child { border-bottom: none; }
+  .role-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--brand-1);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .role-avatar.em { background: #0f6e56; }
+  .role-avatar.te { background: #7f3fbf; }
+  .role-name { font-weight: 500; color: var(--text-1); }
+  .role-func { color: var(--text-3); font-size: 12px; }
+
+  /* SEARCH */
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    border: 1.5px solid var(--border-strong);
+    border-radius: 40px;
+    padding: 0 16px;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+    max-width: 520px;
+  }
+  .search-bar input {
+    flex: 1;
+    border: none;
+    background: none;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-1);
+    padding: 12px 0;
+    outline: none;
+  }
+  .search-icon { color: var(--text-3); font-size: 15px; }
+
+  /* FILTER ROW */
+  .filter-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .filter-label { font-size: 12px; color: var(--text-3); font-weight: 500; }
+  .filter-chip {
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    font-size: 12px;
+    color: var(--text-2);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+  .filter-chip:hover { border-color: var(--brand-1); color: var(--brand-1); }
+  .filter-chip.active { background: var(--brand-1); color: #fff; border-color: var(--brand-1); }
+
+  /* EMPTY STATE */
+  .empty-state { text-align: center; padding: 4rem 2rem; color: var(--text-3); }
+  .empty-state p { font-size: 14px; }
+</style>
+
+<nav>
+  <div class="nav-logo" onclick="goPage('home')">Evento<span>Ágil</span></div>
+  <div class="nav-links">
+    <button class="nav-btn active" id="nav-home" onclick="goPage('home')">Início</button>
+    <button class="nav-btn" id="nav-repo" onclick="goPage('repo')">Repositório</button>
+    <button class="nav-btn" id="nav-processo" onclick="goPage('processo')">O Processo</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-tag">Playbook de Eventos Ágeis</div>
+    <h1>A ferramenta certa para o <em>momento certo</em> do seu evento</h1>
+    <p>Repositório de cerimônias, templates, dinâmicas e indicadores para times de marketing que gerenciam eventos com metodologia ágil.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="goPage('repo')">Explorar repositório</button>
+      <button class="btn-secondary" onclick="goPage('processo')">Ver o processo completo</button>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Fases do processo</div></div>
+    <div class="stat-item"><div class="stat-num">18</div><div class="stat-label">Seções detalhadas</div></div>
+    <div class="stat-item"><div class="stat-num">24</div><div class="stat-label">Ferramentas & templates</div></div>
+    <div class="stat-item"><div class="stat-num">80+</div><div class="stat-label">Indicadores mapeados</div></div>
+  </div>
+
+  <div class="section">
+    <p class="section-title">Como você quer começar?</p>
+    <p class="section-sub">Três entradas para três momentos diferentes</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:3rem;">
+      <div class="tool-card fase-1" onclick="setPhase('concepcao');goPage('repo')" style="cursor:pointer;">
+        <div style="font-size:28px;margin-bottom:12px;">🧭</div>
+        <div class="card-title">Estou começando um evento</div>
+        <div class="card-desc">Acesse as ferramentas da fase de Concepção: briefing, mapeamento de stakeholders e definição de OKRs.</div>
+        <div class="card-footer"><span class="card-meta">5 ferramentas</span><div class="card-arrow">→</div></div>
+      </div>
+      <div class="tool-card fase-2" onclick="goPage('repo')" style="cursor:pointer;">
+        <div style="font-size:28px;margin-bottom:12px;">🔍</div>
+        <div class="card-title">Preciso de uma dinâmica agora</div>
+        <div class="card-desc">Filtre por fase, tipo e duração. Encontre a ferramenta certa para o momento que você está vivendo.</div>
+        <div class="card-footer"><span class="card-meta">Repositório completo</span><div class="card-arrow">→</div></div>
+      </div>
+      <div class="tool-card fase-3" onclick="goPage('processo')" style="cursor:pointer;">
+        <div style="font-size:28px;margin-bottom:12px;">🗺️</div>
+        <div class="card-title">Quero entender o processo</div>
+        <div class="card-desc">Veja o ciclo completo de gestão ágil de eventos — do briefing à retrospectiva — em uma visão integrada.</div>
+        <div class="card-footer"><span class="card-meta">Visão completa</span><div class="card-arrow">→</div></div>
+      </div>
+    </div>
+
+    <p class="section-title">Ferramentas em destaque</p>
+    <p class="section-sub">As mais usadas pelos times de eventos</p>
+    <div class="card-grid">
+      <div class="tool-card fase-1" onclick="goDetail('briefing')">
+        <div class="card-badges"><span class="badge badge-tipo">Template</span><span class="badge badge-dur">2h</span></div>
+        <div class="card-title">Briefing Estruturado</div>
+        <div class="card-desc">As 8 perguntas obrigatórias que transformam uma demanda vaga em escopo claro e aprovado.</div>
+        <div class="card-footer"><span class="card-meta badge-fase-1" style="padding:3px 8px;border-radius:8px;">Concepção</span><div class="card-arrow">→</div></div>
+      </div>
+      <div class="tool-card fase-2" onclick="goDetail('backlog')">
+        <div class="card-badges"><span class="badge badge-tipo">Template</span><span class="badge badge-dur">2–3h</span></div>
+        <div class="card-title">Backlog do Evento</div>
+        <div class="card-desc">Inventário único e priorizado de tudo que precisa ser feito. O único lugar de verdade do projeto.</div>
+        <div class="card-footer"><span class="card-meta badge-fase-2" style="padding:3px 8px;border-radius:8px;">Planejamento</span><div class="card-arrow">→</div></div>
+      </div>
+      <div class="tool-card fase-3" onclick="goDetail('kanban')">
+        <div class="card-badges"><span class="badge badge-tipo">Quadro</span><span class="badge badge-dur">Contínuo</span></div>
+        <div class="card-title">Quadro Kanban</div>
+        <div class="card-desc">Centro de controle visual da execução. Torna o trabalho em andamento visível para todo o time.</div>
+        <div class="card-footer"><span class="card-meta badge-fase-3" style="padding:3px 8px;border-radius:8px;">Execução</span><div class="card-arrow">→</div></div>
+      </div>
+      <div class="tool-card fase-5" onclick="goDetail('retro')">
+        <div class="card-badges"><span class="badge badge-tipo">Dinâmica</span><span class="badge badge-dur">1,5–2h</span></div>
+        <div class="card-title">Retrospectiva Pós-Evento</div>
+        <div class="card-desc">5 etapas para transformar o aprendizado do time em ações concretas para o próximo projeto.</div>
+        <div class="card-footer"><span class="card-meta badge-fase-5" style="padding:3px 8px;border-radius:8px;">Encerramento</span><div class="card-arrow">→</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REPOSITÓRIO -->
+<div id="page-repo" class="page">
+  <div class="section">
+    <p class="section-title">Repositório de ferramentas</p>
+    <p class="section-sub">Filtre por fase, tipo ou duração</p>
+
+    <div class="search-bar">
+      <span class="search-icon">⌕</span>
+      <input type="text" placeholder="Buscar ferramentas, templates, dinâmicas..." id="search-input" oninput="filterCards()">
+    </div>
+
+    <div class="phase-tabs">
+      <button class="phase-tab active" onclick="setPhase('all')" id="tab-all">Todas as fases</button>
+      <button class="phase-tab c2" onclick="setPhase('concepcao')" id="tab-concepcao">Concepção</button>
+      <button class="phase-tab c3" onclick="setPhase('planejamento')" id="tab-planejamento">Planejamento</button>
+      <button class="phase-tab c4" onclick="setPhase('execucao')" id="tab-execucao">Execução</button>
+      <button class="phase-tab c5" onclick="setPhase('encerramento')" id="tab-encerramento">Encerramento</button>
+    </div>
+
+    <div class="filter-row">
+      <span class="filter-label">Tipo:</span>
+      <button class="filter-chip active" onclick="setTipo('all')" id="tipo-all">Todos</button>
+      <button class="filter-chip" onclick="setTipo('Template')" id="tipo-Template">Template</button>
+      <button class="filter-chip" onclick="setTipo('Cerimônia')" id="tipo-Cerimônia">Cerimônia</button>
+      <button class="filter-chip" onclick="setTipo('Dinâmica')" id="tipo-Dinâmica">Dinâmica</button>
+      <button class="filter-chip" onclick="setTipo('Quadro')" id="tipo-Quadro">Quadro</button>
+    </div>
+
+    <div id="card-grid-repo" class="card-grid"></div>
+    <div id="empty-state" class="empty-state" style="display:none;"><p>Nenhuma ferramenta encontrada com esses filtros.</p></div>
+  </div>
+</div>
+
+<!-- PROCESSO -->
+<div id="page-processo" class="page">
+  <div class="section">
+    <p class="section-title">O ciclo completo do evento ágil</p>
+    <p class="section-sub">Clique em cada fase para explorar suas ferramentas</p>
+
+    <div class="process-strip">
+      <div class="process-flow">
+        <div class="process-step" onclick="setPhase('concepcao');goPage('repo')">
+          <div class="process-step-num n1">1</div>
+          <div class="process-step-name">Concepção</div>
+          <div class="process-step-count">5 ferramentas</div>
+        </div>
+        <div class="process-arrow">›</div>
+        <div class="process-step" onclick="setPhase('planejamento');goPage('repo')">
+          <div class="process-step-num n2">2</div>
+          <div class="process-step-name">Planejamento</div>
+          <div class="process-step-count">6 ferramentas</div>
+        </div>
+        <div class="process-arrow">›</div>
+        <div class="process-step" onclick="setPhase('execucao');goPage('repo')">
+          <div class="process-step-num n3">3</div>
+          <div class="process-step-name">Execução</div>
+          <div class="process-step-count">7 ferramentas</div>
+        </div>
+        <div class="process-arrow">›</div>
+        <div class="process-step" onclick="setPhase('encerramento');goPage('repo')">
+          <div class="process-step-num n5">4</div>
+          <div class="process-step-name">Encerramento</div>
+          <div class="process-step-count">4 ferramentas</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
+      <div class="sidebar-card">
+        <div class="sidebar-title" style="color:var(--brand-1);">Concepção</div>
+        <div class="io-list">
+          <div class="io-item"><div class="io-dot in"></div>Briefing Estruturado</div>
+          <div class="io-item"><div class="io-dot in"></div>Mapa de Stakeholders</div>
+          <div class="io-item"><div class="io-dot in"></div>Reunião de Kickoff</div>
+          <div class="io-item"><div class="io-dot in"></div>OKRs e KPIs</div>
+          <div class="io-item"><div class="io-dot in"></div>Workshop de Mapeamento</div>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sidebar-title" style="color:#0f6e56;">Planejamento</div>
+        <div class="io-list">
+          <div class="io-item"><div class="io-dot" style="background:#0f6e56;"></div>Backlog do Evento</div>
+          <div class="io-item"><div class="io-dot" style="background:#0f6e56;"></div>Roadmap de Sprints</div>
+          <div class="io-item"><div class="io-dot" style="background:#0f6e56;"></div>Sprint Planning</div>
+          <div class="io-item"><div class="io-dot" style="background:#0f6e56;"></div>Registro de Riscos</div>
+          <div class="io-item"><div class="io-dot" style="background:#0f6e56;"></div>Mapa de Dependências</div>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sidebar-title" style="color:#7f3fbf;">Execução</div>
+        <div class="io-list">
+          <div class="io-item"><div class="io-dot" style="background:#7f3fbf;"></div>Quadro Kanban</div>
+          <div class="io-item"><div class="io-dot" style="background:#7f3fbf;"></div>Daily Check-in</div>
+          <div class="io-item"><div class="io-dot" style="background:#7f3fbf;"></div>Controle de WIP</div>
+          <div class="io-item"><div class="io-dot" style="background:#7f3fbf;"></div>Registro de Mudanças</div>
+          <div class="io-item"><div class="io-dot" style="background:#7f3fbf;"></div>Registro de Decisões</div>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sidebar-title" style="color:#1a6080;">Encerramento</div>
+        <div class="io-list">
+          <div class="io-item"><div class="io-dot" style="background:#1a6080;"></div>Review do Evento</div>
+          <div class="io-item"><div class="io-dot" style="background:#1a6080;"></div>Retrospectiva</div>
+          <div class="io-item"><div class="io-dot" style="background:#1a6080;"></div>Painel de Indicadores</div>
+          <div class="io-item"><div class="io-dot" style="background:#1a6080;"></div>Relatório Executivo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL PAGE -->
+<div id="page-detail" class="page">
+  <div id="detail-content"></div>
+</div>
+
+<script>
+const tools = [
+  { id:'briefing', title:'Briefing Estruturado', tipo:'Template', fase:'concepcao', faseName:'Concepção', faseNum:1, dur:'2h', desc:'As 8 perguntas obrigatórias que transformam uma demanda vaga em escopo claro, aprovado e compartilhado com todos.', purpose:'Eliminar ambiguidades antes que virem problemas. O briefing não é burocracia — é o seu escudo.', steps:[{t:'Demanda recebida',d:'Registre a solicitação: quem pediu, quando, qual o contexto inicial.',time:'Antes do kickoff'},{t:'8 perguntas obrigatórias',d:'Percorra: propósito real, público, formato, orçamento, entregas, fora do escopo, aprovações e critério de sucesso.',time:'60 min'},{t:'Validação coletiva',d:'Apresente o rascunho para o Event Owner e stakeholders. Registre divergências.',time:'30 min'},{t:'Aprovação formal',d:'Document assinado pelo Event Owner. Nenhuma ação começa antes disso.',time:'Até 5 dias úteis'}], inputs:['Demanda inicial da liderança','Histórico de eventos anteriores','Restrições orçamentárias conhecidas','Calendário corporativo'], outputs:['Briefing Estruturado aprovado','Lista de premissas e restrições','Lista do que está fora do escopo','Rascunho inicial do Backlog'], tools:['Miro','FigJam','Google Docs','Notion'], kpis:[{n:'% perguntas respondidas antes do kickoff',m:'Meta: 100%'},{n:'Tempo demanda → briefing aprovado',m:'Meta: máx. 5 dias úteis'},{n:'Nº de revisões após aprovação',m:'Meta: máx. 2'},{n:'% stakeholders presentes no kickoff',m:'Meta: mín. 80%'}], roles:[{i:'EO',n:'Event Owner',f:'Aprova o briefing',cl:'eo'},{i:'EM',n:'Event Master',f:'Facilita e registra',cl:'em'},{i:'TE',n:'Time de Execução',f:'Questiona premissas',cl:'te'}], insight:'O custo de mudar uma decisão no papel é infinitamente menor do que mudá-la no dia do evento.' },
+  { id:'stakeholders', title:'Mapa de Stakeholders', tipo:'Template', fase:'concepcao', faseName:'Concepção', faseNum:1, dur:'30–60 min', desc:'Matriz de Influência × Interesse que classifica cada parte interessada em 4 quadrantes com estratégia de engajamento.', purpose:'O stakeholder mais perigoso é o que concorda em silêncio e aparece no final com uma lista de mudanças.', steps:[{t:'Liste todos os stakeholders',d:'Brainstorming sem filtro. Quem pode afetar ou ser afetado pelo evento?',time:'10 min'},{t:'Posicione na matriz',d:'Classifique cada um por influência (vertical) e interesse (horizontal).',time:'15 min'},{t:'Defina a estratégia',d:'Gerencie de Perto / Mantenha Satisfeito / Mantenha Informado / Monitore.',time:'15 min'},{t:'Documente e distribua',d:'Registre canal preferido, momento de envolvimento e responsável pela gestão.',time:'10 min'}], inputs:['Briefing Estruturado aprovado','Organograma da área','Histórico de eventos anteriores','Lista de fornecedores e parceiros'], outputs:['Mapa de Stakeholders','Plano de Comunicação simplificado','Registro de expectativas','Lista de aprovadores por decisão'], tools:['Miro','FigJam','Planilha compartilhada'], kpis:[{n:'Nº stakeholders mapeados antes da execução',m:'Meta: 100%'},{n:'% "Gerencie de Perto" com plano definido',m:'Meta: 100%'},{n:'Nº demandas tardias de não mapeados',m:'Meta: 0'}], roles:[{i:'EO',n:'Event Owner',f:'Identifica stakeholders',cl:'eo'},{i:'EM',n:'Event Master',f:'Classifica e planeja',cl:'em'}], insight:'Mapeie cedo, envolva no momento certo e documente tudo.' },
+  { id:'backlog', title:'Backlog do Evento', tipo:'Template', fase:'planejamento', faseName:'Planejamento', faseNum:2, dur:'2–3h', desc:'Inventário único e priorizado de todas as entregas do evento. O único lugar de verdade sobre o estado do projeto.', purpose:'O retrabalho não nasce da má execução. Nasce da invisibilidade do trabalho.', steps:[{t:'Liste tudo, sem filtro',d:'Brainstorming completo de tudo que precisa acontecer. Não avalie ainda — só liste.',time:'30 min'},{t:'Escreva como entrega',d:'Transforme atividades em entregas: "contratar fornecedor" vira "contrato assinado".',time:'20 min'},{t:'Priorize com critério',d:'Event Owner classifica: Crítico / Importante / Desejável.',time:'30 min'},{t:'Estime o esforço',d:'Time avalia complexidade relativa: P / M / G / GG.',time:'30 min'},{t:'Defina o "Pronto"',d:'Para cada categoria, estabeleça o Critério de Conclusão.',time:'20 min'}], inputs:['Briefing Estruturado aprovado','Mapa de Stakeholders','OKRs e KPIs do evento','Histórico de backlogs anteriores'], outputs:['Backlog priorizado e estimado','Mapa de categorias de entrega','Estimativa de capacidade','Registro de itens descartados'], tools:['Notion','Trello','Asana','Google Sheets','Monday.com'], kpis:[{n:'% itens com prioridade definida',m:'Meta: 100%'},{n:'% itens com critério de conclusão',m:'Meta: ≥ 90%'},{n:'% itens estimados pelo time',m:'Meta: ≥ 85%'}], roles:[{i:'EO',n:'Event Owner',f:'Prioriza o backlog',cl:'eo'},{i:'EM',n:'Event Master',f:'Facilita e mantém',cl:'em'},{i:'TE',n:'Time de Execução',f:'Estima o esforço',cl:'te'}], insight:'Um backlog bem construído é o antídoto contra a reunião de última hora.' },
+  { id:'kanban', title:'Quadro Kanban', tipo:'Quadro', fase:'execucao', faseName:'Execução', faseNum:3, dur:'Contínuo', desc:'Painel visual com 5 colunas que torna o trabalho em andamento visível para todo o time em tempo real.', purpose:'A informação que não está visível não pode ser gerenciada.', steps:[{t:'Configure o quadro',d:'5 colunas: Backlog do Sprint → Em Andamento → Aguardando → Em Revisão → Concluído.',time:'Event Master'},{t:'Defina limites de WIP',d:'Em Andamento: nº de pessoas × 1,5. Aguardando: máx. 3. Em Revisão: máx. 2.',time:'Sprint Planning'},{t:'Preencha os cartões',d:'Cada cartão: nome da entrega, responsável, prazo, prioridade.',time:'Daily'},{t:'Opere diariamente',d:'Cada pessoa move seus próprios cartões. Cartões em Aguardando sempre com motivo registrado.',time:'Contínuo'}], inputs:['Sprint Backlog definido','Critério de Conclusão por categoria','Calendário do sprint'], outputs:['Quadro ativo — fonte única de verdade','Visibilidade de bloqueios','Histórico de movimentação','Painel de progresso em tempo real'], tools:['Trello','Notion','Jira','Quadro físico + post-its'], kpis:[{n:'% cartões atualizados diariamente',m:'Meta: ≥ 95%'},{n:'Tempo médio de resolução de bloqueios',m:'Meta: máx. 2 dias úteis'},{n:'% entregas com critério de conclusão',m:'Meta: 100%'}], roles:[{i:'EM',n:'Event Master',f:'Configura e gerencia',cl:'em'},{i:'EO',n:'Event Owner',f:'Valida e move para Concluído',cl:'eo'},{i:'TE',n:'Time de Execução',f:'Move seus próprios cartões',cl:'te'}], insight:'O Kanban não é uma ferramenta de controle — é uma ferramenta de confiança.' },
+  { id:'daily', title:'Daily Check-in', tipo:'Cerimônia', fase:'execucao', faseName:'Execução', faseNum:3, dur:'15 min', desc:'Reunião diária em pé, estruturada em 3 perguntas, focada em identificar bloqueios antes que virem atrasos.', purpose:'Um impedimento verbalizado na segunda pode ser resolvido até terça. O mesmo impedimento na cabeça de alguém pode travar o evento na sexta.', steps:[{t:'O que concluí?',d:'Confirme entregas: qual cartão foi para Concluído? Qual critério foi atendido?',time:'~2 min/pessoa'},{t:'O que farei hoje?',d:'Comprometimento específico: qual cartão avançará? Para qual coluna?',time:'~2 min/pessoa'},{t:'Há algum impedimento?',d:'Verbalizar qualquer bloqueio — aprovação, fornecedor, decisão travada.',time:'~1 min/pessoa'},{t:'Event Master registra',d:'Anotar impedimentos e comprometer resolução em até 2 dias úteis.',time:'~5 min'}], inputs:['Quadro Kanban atualizado','Sprint Backlog em andamento','Impedimentos do dia anterior'], outputs:['Lista de impedimentos do dia','Quadro Kanban atualizado','Alertas precoces de atraso'], tools:['Slack (assíncrono)','Teams','Zoom','Quadro físico'], kpis:[{n:'% check-ins realizados no prazo',m:'Meta: ≥ 90%'},{n:'Duração média do Daily',m:'Meta: máx. 15 min'},{n:'% impedimentos resolvidos em 2 dias',m:'Meta: ≥ 85%'}], roles:[{i:'EM',n:'Event Master',f:'Facilita e anota bloqueios',cl:'em'},{i:'TE',n:'Time de Execução',f:'Responde as 3 perguntas',cl:'te'}], insight:'O Daily não serve para saber o que o time está fazendo — o quadro já mostra isso.' },
+  { id:'sprint-planning', title:'Sprint Planning', tipo:'Cerimônia', fase:'planejamento', faseName:'Planejamento', faseNum:2, dur:'1–2h', desc:'Reunião estruturada em 3 perguntas (Por quê? O quê? Como?) para comprometer o time com as entregas do ciclo.', purpose:'O maior erro no Sprint Planning é confundir comprometimento com obediência. O time não aceita ordens — faz uma promessa coletiva.', steps:[{t:'Por quê? — Sprint Goal',d:'Qual é o objetivo central do ciclo? Uma frase que descreve o resultado esperado.',time:'10 min'},{t:'O quê? — Seleção',d:'Event Owner apresenta prioridades; time avalia e seleciona o que cabe no ciclo.',time:'25 min'},{t:'Como? — Detalhamento',d:'Para cada item: responsável, subtarefas, dependências, critério de conclusão.',time:'25 min'},{t:'Comprometimento',d:'Time confirma Sprint Goal. Event Master atualiza o Kanban.',time:'10 min'}], inputs:['Backlog atualizado','Roadmap com Sprint Goals previstos','Resultado do sprint anterior','Capacidade real do time'], outputs:['Sprint Backlog comprometido','Sprint Goal confirmado','Quadro Kanban atualizado','Itens postergados registrados'], tools:['Trello','Jira','Notion','Quadro físico'], kpis:[{n:'% itens com responsável definido',m:'Meta: 100%'},{n:'Taxa de conclusão dos itens',m:'Meta: ≥ 80%'},{n:'Duração do Sprint Planning',m:'Meta: máx. 1h (sprint semanal)'}], roles:[{i:'EO',n:'Event Owner',f:'Apresenta prioridades',cl:'eo'},{i:'EM',n:'Event Master',f:'Facilita a reunião',cl:'em'},{i:'TE',n:'Time de Execução',f:'Seleciona e estima',cl:'te'}], insight:'Quando o time escolhe o que vai fazer, a responsabilidade pela entrega é genuína.' },
+  { id:'retro', title:'Retrospectiva Pós-Evento', tipo:'Dinâmica', fase:'encerramento', faseName:'Encerramento', faseNum:5, dur:'1,5–2h', desc:'5 etapas para transformar o aprendizado coletivo em ações concretas. A cerimônia mais poderosa — e mais evitada.', purpose:'A Retrospectiva não melhora o evento que acabou. Ela melhora todos os eventos que ainda vão acontecer.', steps:[{t:'Contexto (10 min)',d:'Revisar os números da Review: OKRs, NPS, presença. Definir o tom: foco no processo, nunca na pessoa.',time:'10 min'},{t:'O que funcionou bem? (20 min)',d:'Individual primeiro (post-its), depois em grupo. Os 3 mais votados = práticas a manter.',time:'20 min'},{t:'O que pode melhorar? (25 min)',d:'Mesmo formato. Descreva o problema do processo, não o culpado.',time:'25 min'},{t:'Plano de Melhoria (30 min)',d:'Máx. 5 ações com responsável e prazo. Sem responsável = intenção, não ação.',time:'30 min'},{t:'Reconhecimento (15 min)',d:'Reconhecimento específico e genuíno — não "vocês foram incríveis".',time:'15 min'}], inputs:['Outputs da Review do Evento','Registro de impedimentos','Registro de Mudanças','Retrospectivas anteriores'], outputs:['O que funcionou bem — práticas a manter','Plano de Melhoria (máx. 5 ações)','Base de conhecimento do time'], tools:['Miro','FigJam','Google Slides','Notion'], kpis:[{n:'Retrospectiva em até 5 dias úteis',m:'Meta: 100% dos eventos'},{n:'Nº de ações geradas',m:'Meta: entre 3 e 5'},{n:'% ações implementadas no próximo projeto',m:'Meta: ≥ 80%'}], roles:[{i:'EM',n:'Event Master',f:'Facilita e registra',cl:'em'},{i:'TE',n:'Time de Execução',f:'Participa ativamente',cl:'te'}], insight:'Times que não fazem Retrospectiva não evoluem. Repetem.' },
+  { id:'mudancas', title:'Registro de Mudanças', tipo:'Template', fase:'execucao', faseName:'Execução', faseNum:3, dur:'Contínuo', desc:'Formulário de 6 campos que garante que nenhuma mudança de escopo entre no projeto de forma invisível.', purpose:'Todo "sim" dado a uma mudança de escopo é, implicitamente, um "não" dado a algo que já estava planejado.', steps:[{t:'Registro imediato',d:'Qualquer demanda nova é registrada ANTES de qualquer ação. Quem pediu, o quê, quando, por quê.',time:'< 10 min'},{t:'Avaliação de impacto',d:'Event Master avalia: se isso entra, o que sai ou atrasa? Prazo, orçamento, capacidade.',time:'< 1 dia'},{t:'Decisão formal',d:'Event Owner decide: Aprovado / Rejeitado / Postergado. Registra inclusive quando é não.',time:'< 2 dias'},{t:'Comunicação',d:'Solicitante informado da decisão e do impacto. Mudança aprovada entra no backlog.',time:'< 1 dia'}], inputs:['Backlog atualizado','Briefing aprovado','OKRs do evento','Registro de mudanças anteriores'], outputs:['Registro completo de mudanças','Backlog atualizado','Relatório de impacto acumulado','Comunicação formal ao solicitante'], tools:['Google Sheets','Notion','Google Forms'], kpis:[{n:'% mudanças registradas formalmente',m:'Meta: 100%'},{n:'% com avaliação de impacto',m:'Meta: 100%'},{n:'Tempo solicitação → decisão',m:'Meta: máx. 2 dias úteis'}], roles:[{i:'EM',n:'Event Master',f:'Registra e avalia',cl:'em'},{i:'EO',n:'Event Owner',f:'Decide e aprova',cl:'eo'}], insight:'Mudança não gerenciada não é azar. É planejamento incompleto.' },
+  { id:'review', title:'Review do Evento', tipo:'Cerimônia', fase:'encerramento', faseName:'Encerramento', faseNum:5, dur:'2–3h', desc:'4 blocos para avaliar o que foi entregue, os resultados gerados e os ajustes para o próximo evento.', purpose:'O time que não revisa o que entregou está condenado a repetir os mesmos erros no próximo evento.', steps:[{t:'Bloco 1 — O que foi entregue',d:'Percorrer o backlog: foi entregue? Critério atendido? Causas do não-entregue.',time:'30 min'},{t:'Bloco 2 — Resultados',d:'Avaliar OKRs e KPIs: NPS, presença, leads, cobertura. Dados são obrigatórios.',time:'45 min'},{t:'Bloco 3 — Percepção',d:'Feedbacks de participantes, liderança e palestrantes.',time:'30 min'},{t:'Bloco 4 — Ajustes',d:'Event Owner define o que manter, mudar e testar no próximo evento.',time:'30 min'}], inputs:['Backlog com status final','OKRs e KPIs definidos','NPS, presença, leads','Feedbacks coletados'], outputs:['Relatório de Entrega','Relatório de Resultados','Feedbacks compilados','Lista de ajustes aprovada'], tools:['Google Slides','Notion','Google Sheets'], kpis:[{n:'% OKRs com resultado medido',m:'Meta: 100%'},{n:'NPS do evento',m:'Meta: ≥ 50 (mínimo)'},{n:'Taxa de presença',m:'Meta: ≥ 75%'}], roles:[{i:'EO',n:'Event Owner',f:'Avalia resultados',cl:'eo'},{i:'EM',n:'Event Master',f:'Prepara e facilita',cl:'em'}], insight:'A Review não é celebração. É inspeção honesta do que foi construído.' },
+];
+
+let currentPhase = 'all';
+let currentTipo = 'all';
+
+function goPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const nb = document.getElementById('nav-' + page);
+  if (nb) nb.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function setPhase(phase) {
+  currentPhase = phase;
+  document.querySelectorAll('.phase-tab').forEach(t => t.classList.remove('active'));
+  const tab = document.getElementById('tab-' + phase);
+  if (tab) tab.classList.add('active');
+  filterCards();
+}
+
+function setTipo(tipo) {
+  currentTipo = tipo;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  const chip = document.getElementById('tipo-' + tipo);
+  if (chip) chip.classList.add('active');
+  filterCards();
+}
+
+function filterCards() {
+  const q = (document.getElementById('search-input').value || '').toLowerCase();
+  const grid = document.getElementById('card-grid-repo');
+  const empty = document.getElementById('empty-state');
+  const faseMap = {concepcao:1,planejamento:2,execucao:3,encerramento:5};
+
+  let filtered = tools.filter(t => {
+    const matchPhase = currentPhase === 'all' || t.fase === currentPhase;
+    const matchTipo = currentTipo === 'all' || t.tipo === currentTipo;
+    const matchQ = !q || t.title.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q);
+    return matchPhase && matchTipo && matchQ;
+  });
+
+  if (filtered.length === 0) {
+    grid.style.display = 'none';
+    empty.style.display = 'block';
+  } else {
+    grid.style.display = 'grid';
+    empty.style.display = 'none';
+    grid.innerHTML = filtered.map(t => `
+      <div class="tool-card fase-${t.faseNum}" onclick="goDetail('${t.id}')">
+        <div class="card-badges">
+          <span class="badge badge-tipo">${t.tipo}</span>
+          <span class="badge badge-dur">${t.dur}</span>
+        </div>
+        <div class="card-title">${t.title}</div>
+        <div class="card-desc">${t.desc}</div>
+        <div class="card-footer">
+          <span class="badge badge-fase-${t.faseNum}" style="padding:3px 8px;border-radius:8px;">${t.faseName}</span>
+          <div class="card-arrow">→</div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function goDetail(id) {
+  const t = tools.find(x => x.id === id);
+  if (!t) return;
+
+  const faseColors = {1:'var(--brand-1)',2:'#0f6e56',3:'#7f3fbf',4:'#c04020',5:'#1a6080'};
+  const fc = faseColors[t.faseNum] || 'var(--brand-1)';
+
+  const stepsHtml = t.steps.map((s,i) => `
+    <div class="step-item">
+      <div class="step-dot" style="background:${fc};">${i+1}</div>
+      <div class="step-content">
+        <div class="step-title">${s.t}</div>
+        <div class="step-desc">${s.d}</div>
+        <div class="step-time">${s.time}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const roleClasses = {eo:'',em:'em',te:'te'};
+  const roleBgs = {eo:'var(--brand-1)',em:'#0f6e56',te:'#7f3fbf'};
+  const rolesHtml = t.roles.map(r => `
+    <div class="role-item">
+      <div class="role-avatar" style="background:${roleBgs[r.cl] || 'var(--brand-1)'};">${r.i}</div>
+      <div><div class="role-name">${r.n}</div><div class="role-func">${r.f}</div></div>
+    </div>
+  `).join('');
+
+  const toolsHtml = t.tools.map(tl => `
+    <div class="tool-item">
+      <div class="tool-icon">${tl.slice(0,2)}</div>${tl}
+    </div>
+  `).join('');
+
+  const inputsHtml = t.inputs.map(i => `<div class="io-item"><div class="io-dot in"></div>${i}</div>`).join('');
+  const outputsHtml = t.outputs.map(o => `<div class="io-item"><div class="io-dot out"></div>${o}</div>`).join('');
+  const kpisHtml = t.kpis.map(k => `<div class="kpi-item"><div class="kpi-name">${k.n}</div><div class="kpi-meta">${k.m}</div></div>`).join('');
+
+  document.getElementById('detail-content').innerHTML = `
+    <div class="detail-hero">
+      <button class="detail-back" onclick="goPage('repo')">← Voltar ao repositório</button>
+      <div class="detail-header">
+        <div class="detail-header-text">
+          <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+            <span class="badge badge-tipo">${t.tipo}</span>
+            <span class="badge badge-dur">${t.dur}</span>
+            <span class="badge badge-fase-${t.faseNum}">${t.faseName}</span>
+          </div>
+          <div class="detail-title">${t.title}</div>
+          <div class="detail-purpose">${t.purpose}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-body">
+      <div>
+        <div class="detail-section">
+          <div class="detail-section-title">Como aplicar</div>
+          <div class="step-list">${stepsHtml}</div>
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-label">Insight ágil</div>
+          <div class="insight-text">"${t.insight}"</div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-section-title">Inputs necessários</div>
+          <div class="io-list">${inputsHtml}</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-section-title">O que este processo entrega</div>
+          <div class="io-list">${outputsHtml}</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-card">
+          <div class="sidebar-title">Responsáveis</div>
+          ${rolesHtml}
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-title">Ferramentas sugeridas</div>
+          <div class="tool-list">${toolsHtml}</div>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-title">Indicadores desta etapa</div>
+          <div class="kpi-list">${kpisHtml}</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-detail').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+filterCards();
+</script>
